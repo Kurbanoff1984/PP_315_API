@@ -11,8 +11,9 @@ import ru.kata.spring.boot_security.demo.service.UserService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/admin")
+@RequestMapping("/api/admin/users")
 public class AdminController {
+
 
     private final UserService userService;
 
@@ -21,35 +22,33 @@ public class AdminController {
         this.userService = userService;
     }
 
-    @PutMapping("/users")
+    @PutMapping
     public ResponseEntity<HttpStatus> update(@RequestBody User user) {
         userService.add(user);
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/users")
+    @PostMapping
     public ResponseEntity<HttpStatus> create(@RequestBody User user) {
         userService.add(user);
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/users/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> delete(@PathVariable("id") int id) {
         userService.removeUser(id);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("users/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<User> getUserId(@PathVariable("id") int id) {
         User user = userService.getUser(id);
         return ResponseEntity.ok(user);
     }
 
-
-    @GetMapping("/users")
+    @GetMapping
     private ResponseEntity<List<User>> getUsers() {
         List<User> users = userService.getAllUsers();
         return ResponseEntity.ok(users);
     }
 }
-
